@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// Shows the initial UI for the app.
+// .padding() is Called a view modifier. It returns a new View with old data and new modifications.
 struct ContentView: View {
     var body: some View {
         VStack {
@@ -15,7 +17,7 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Text("Hello, world!")
         }
-        .padding()
+        .padding()  // Called a view modifier. It returns a new View with old data and new modifications.
     }
 }
 
