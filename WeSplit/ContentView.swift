@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var checkAmount = 0.0
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
+    @FocusState private var amountIsFocused: Bool
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
@@ -33,6 +34,7 @@ struct ContentView: View {
                 Section {
                     TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))    // Format is responsible for how the value should be formatted. Locale.current refers to the user's locale settings, which contains information about the user's region, language, and currency. Locale.current.currency?.identifier attempts to retrieve the currency code e.g. USD, EUR from the user's locale. "USD" is a fallback if the left side of ?? is nil.
                         .keyboardType(.decimalPad)  // This method allows to pop up the number keyboard when clicking on the textfield.
+                        .focused($amountIsFocused)  // Returns true if the TextField is focused, aka being currently being inputted by the user.
                     
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2..<100) {
@@ -56,6 +58,14 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("WeSplit")
+            // The keyboard gets dismissed when the button titled "Done" is pressed. The toolbar is a bar, but since we didn't specify where to place the keyboard, then it will automatically choose for us.
+            .toolbar {
+                if amountIsFocused {
+                    Button("Done") {
+                        amountIsFocused = false
+                    }
+                }
+            }
         }
         
     }
